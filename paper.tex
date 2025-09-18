@@ -179,97 +179,210 @@ area. We hope the review presented in this paper will aid future development of 
   \end{minipage}
 \end{wide}
 \vspace{-0.5em}
-\caption{Two examples of document-oriented programming systems. In Boxer \cite{disessa-1986-boxer}
-(left), code and data are represented as nested boxes. All code and state exists in the document
-and code can modify the document. In Jupyter \cite{kluyver-2016-jupyter} (right), documents consist
-of sequence of cells. The results of evaluating a code cell are included in the document, but the
-full state is managed by the underlying kernel.}
+\caption{%Two examples of document-oriented programming systems.
+In Boxer \cite{disessa-1986-boxer}
+(left), code and data are represented as nested boxes. All code and state exists in the document.
+Executing a box runs the code, which can make changes to the document.
+In Jupyter \cite{kluyver-2016-jupyter} (right), documents consist
+of sequence of cells. The results of evaluating a code cell are displayed in the document, but the
+full state is managed by the hidden underlying kernel.}
 \label{fig:systems}
 \end{figure}
 
 \section{Introduction}
-Document-oriented programming systems are a kind of programming environment that is built
-around a user interface that resembles a document. The document interface is typically used
+\label{sec:intro}
+Document-oriented programming systems are programming environments that are built around a user
+interface modelled after a document editor. The document interface is typically used
 for editing the underlying program, for executing the program or its fragments, as well as
 for using interactive elements embedded in the document. The origins of the paradigm can be
-traced back to the 1980s \cite{disessa-1986-boxer} and has a rich history, but there has been
-a renewed interest in the design of document-oriented programming systems in recent years
-(Figure~\ref{fig:systems}).
+traced to the 1980s \cite{disessa-1986-boxer} and the paradigm has a rich history, but there has
+been a renewed interest in the design of document-oriented programming systems in recent years,
+both in practice and in research (Figure~\ref{fig:systems}).
 
-As both recent and historical examples of document-oriented programming systems illustrate,
+As historical, as well as recent, examples of document-oriented programming systems illustrate,
 there are many ways in which the document metaphor can be used as the basis for a programming
 system. In particular, there is a great variety in the kind of document structure used,
 in how rich user interfaces are embedded within the document, in how programming is integrated
 with the document and also in how computations are executed.
 
-To advance research on document-oriented programming systems, we need (i) to more precisely
-characterise what a document-oriented programming system is, (ii) understand the design
+We argue that to advance research on document-oriented programming systems, we need to (i)~precisely
+characterise what a document-oriented programming system~is, (ii) understand the design
 choices available to the designers of document-oriented programming systems, and (iii)
-a review of the choices made in existing document-oriented programming systems.
+document the design choices made in existing document-oriented programming systems.
 
-\section{Definition}
+\subsection{Definition}
 \label{sec:def}
-The term programming systems has been used to talk about ``an integrated and complete set of tools
+The term \emph{programming system} has been used to talk about ``an integrated and complete set of tools
 sufficient for creating, modifying, and executing programs''~\cite{jakubovic-2023-techdims}.
-It shifts the focus from programming languages to a more general notion that also encompasses
+The term shifts the focus from programming languages to a more general notion that also encompasses
 the interactive graphical environments in which programming is done.
 
 Document-oriented programming systems are a particular kind of programming systems, built around
-the central document metaphor. They represent programs as documents, often including their state,
-documentation and other artefacts. The programming and using of programs in document-oriented
-programming systems is also done through a document interface.
+the central metaphor of a document. Such systems represent programs as documents that include data,
+code, documentation, but sometimes also evaluation state and other artefacts. The programming and
+using of programs in a document-oriented programming system is also done through the
+document interface.
 
-To make the category of document-oriented programming systems more precise, we can use
+To make the category of document-oriented programming systems more precise, we use
 Technical Dimensions of Programming Systems \cite{jakubovic-2023-techdims}. The framework
-identifies a number of ``axes'' along which programming systems can be placed and contrasted.
+identifies a number of axes along which programming systems can be placed and contrasted.
 Document-oriented programming systems occupy a particular sub-space of the entire design
 space mapped by the technical dimensions framework. The sub-space can be delineated in terms
 of three main categories of technical dimensions.
 
 \begin{itemize}
 \item \textbf{Notation.} The \emph{primary notation} in a document-oriented programming system
-is a document. Many systems are based on structured text documents, but some also include
-other media such as images or even video. Other document structures include spreadsheets,
+is a document. Many systems are based on structured text documents, but some include
+other media such as images or video. Other document structures include spreadsheets,
 stacks of cards or text-based Markdown documents. The document often includes
 \emph{secondary notations} representing formulas or code, possibly in multiple different
 programming languages. The \emph{notational structure} is thus built around multiple
 complementing notations.
 
-\item \textbf{Interaction.} Document-oriented programming systems typically have only one
-\emph{mode of interaction}. In that mode, the document can be modified, code embedded in the
-document can be edited as well as executed and the user can interact with any interactive
-elements in the document. The effects of interacting with the document are mostly
-immediate, although only some systems are live and automatically recompute results.
-The \emph{feedback loops} in document-oriented programming systems thus typically aim to
-minimize the gulf of evaluation gulf.
+\item \textbf{Interaction.} In the main \emph{mode of interaction} in document-oriented
+programming systems, the user cam modify the document, edit and execute code embedded in the
+document and also interact with any interactive elements in the document. The effects of interacting
+with the document are mostly immediate, although only a few systems are live. The \emph{feedback
+loops} in document-oriented programming systems thus typically aim to minimize the gulf of
+evaluation. Within the main mode of interaction, there may be multiple more specific sub-modes,
+for example when editing code in a code editor embedded within the document.
 
 \item \textbf{Customization.} In document-oriented programming systems, it is typically possible
 to modify the document at any point during the use of the system. In terms of technical
 dimensions, the \emph{staging of customization} is such that that the modification of the
 document or code embedded in it does not require a special \emph{mode of interaction}. The
-customization is also done using the original notations of the system.
+customization is also done using the original notations of the system. However, it is rarely
+possible to modify the system itself from within the document and this typically requires a
+different mode of interaction (such as editing system source code outside of the document
+and restarting the system).
 \end{itemize}
 
-\noindent
-The aforementioned aspects define what we understand
-as \emph{document-oriented programming systems}. They delineate a design space that is inhabited
-by a range of existing programming systems, but also contains many more design possibilities.
+The aforementioned aspects define \emph{document-oriented programming systems}.
+While the design space can be further mapped using existing technical dimensions,
+many design choices that are specific to document-oriented programming systems,
+are not included in the framework and a deserve further examination.
 
-While the design space can be further mapped using the existing technical dimensions, there are
-many design choices that are specific to document-oriented programming systems, do not apply to
-other programming systems and are thus not included in the technical dimensions framework.
+\subsection{Contributions}
+Technical dimensions of programming systems \cite{jakubovic-2023-techdims} map the broad
+design space of programming systems. As the authors pointed out, programming systems built
+around text-based programming languages form one well-understood cluster in the space.
+
+In this paper, we identify and zoom in on another interesting cluster of programming systems.
+Document-oriented programming systems deserve a close examination. The systems in this cluster
+share multiple technical characteristics and often aim to make programming more accessible.
+They have a rich history, include some of the most widely used programming systems (spreadsheets)
+and form an active research area.
+
+\begin{itemize}
+\item We characterize the notion of a document-oriented programming system in terms of the
+  technical dimensions framework (Section~\ref{sec:def}), going beyond the informal metaphor
+  of a programming system built around a structured document.
+\item We review a number of diverse past and recent examples of document-oriented programming
+  systems (Section~\ref{sec:examples}). These provide valuable reference points for discussion
+  about system design.
+\item We present a catalogue of twelve central design choices that designers of document-oriented
+  programming systems face (Sections~\ref{sec:struct}, \ref{sec:prog}, \ref{sec:gui}, \ref{sec:eval}),
+  alongside with interesting examples illustrating the different choices.
+\end{itemize}
+
+To develop the catalogue, we draw from our own experience developing multiple document-oriented programming systems
+\cite{jakubovic-2022-bootstraplab,petricek-2025-denicek,edwards-2005-subtext,edwards-2025-baseline,edwards-2018-directprog},
+extensive literature review and also discussions at multiple workshops dedicated to past and
+future programming systems (Boxer Salon 2022, Substrates 2025).
+
+\subsection{Using this Paper}
+
+Tha aims of this paper are to highlight an interesting programming systems paradigm, develop a better
+understanding of the design choices within the paradigm and facilitate further research on
+document-oriented programming systems. The different aims are best served by different ways of
+using the paper.
+
+\begin{itemize}
+\item Readers who want to get an overview of document-oriented programming systems can
+  focus on the introduction (\S\ref{sec:intro}) and examples (\S\ref{sec:examples}). They can then
+  read the summary paragraphs for each of the design choices and learn about interesting designs
+  by examining the examples (``Example'' sections) throughout the paper.
+
+\item Researchers who are interested in comparing document-oriented programming systems
+  can read the summary paragraphs for each of the design choices and then proceed to the
+  details of the design choices that are relevant for their systems.
+
+\item Designers of novel document-oriented programming systems may find it useful to skim through
+  the entire catalogue to explore interesting, but under-researched alternatives to some of the
+  widely used and established design choices.
+\end{itemize}
+
+Although the paper can be read cover to cover, it is better approached with a specific
+document-oriented programming system or a design question in mind.
 
 \section{Examples}
+\label{sec:examples}
+There are many programming systems that match our definition of a \emph{document-oriented
+programming system}. In this section, we provide a brief overview of some of them, focusing on
+systems that appear frequently as examples in our catalogue.
 
-\subsection{Better known systems}
+\begin{figure}[b]
+\centering
+\includegraphics[width=0.95\linewidth]{fig/optics.png}
+\caption{A page from a Boxer textbook on optics. Readers can construct new experiments, but
+  also explore the implementation. (Image source~\cite{disessa-1986-boxer})}
+\label{fig:book}
+\vspace{1em}
+\end{figure}
+
+\subsection{Historical Origins: Boxer}
+The Boxer system \cite{disessa-1986-boxer,disessa-1985-design} was developed in the early 1980s
+as an educational interactive computational environment. One of the envisioned use cases of
+the system was production of interactive textbooks. The readers of such textbook would be able
+to explore interactive explanations in the textbook, modify parameters, but also see the
+logic implementing the explanations and potentially customize it (Figure~\ref{fig:book}).
+
+In Boxer, the document consists of nested boxes. There are two main kinds of boxes.
+{\sc Data} boxes contain text, graphics and other boxes. {\sc Doit} boxes contain program
+text and other {\sc Doit} and {\sc Data} boxes \cite[p.2]{klotz-1989-boxer}. Boxes are used
+to represent structured data (such as a collection of records) as well as nesting structure
+in code (body of a loop). The system also includes {\sc Graphics} boxes that can display
+visual output and respond to user interactions.
+
+The Boxer environment lets the user manipulate the document. They can create new boxes, modify
+text and code in existing boxes and delete boxes. Boxer uses \emph{spatial metaphor},
+leveraging the commonsense knowledge of space to make computing more comprehensible
+\cite[p.2]{disessa-1986-boxer}. Another important principle of Boxer is \emph{naive realism},
+which means that what the users see on their screen is ``their computational world in its
+entirety'' \cite[p.3]{disessa-1986-boxer}. Boxes can be shrunk to hide their contents and
+even put in closets to hide them \cite{disessa-2021-structures}, but they are always present
+in the document and can always be located and accessed.
+
+Computation in Boxer is represented as code in {\sc Doit} boxes. The code can be executed by
+clicking on the box. Conceptually, evaluation of code is based on \emph{copying semantics}.
+When the running code references another box, the evaluation behaves as if the referenced box
+was copied in the place where it is referenced from. (The consequence of this model is that
+the system uses dynamic variable scoping.) Computation can modify state of the document. If
+it also produces a result, the result is placed in a new {\sc Data} box in the document.
+
+Boxer also provides a range of functions for manipulating boxes in the document.
+For example, the \texttt{BUILD} command can be used to construct a new box from a box
+that serves as a template with placeholders, in a manner similar to meta-programming in Lisp.
+However, the underlying Boxer runtime that provides the basic user interface and evaluation
+logic remains hidden from the user and cannot be modified directly from within Boxer.
+
+\begin{figure}[t]
+\begin{wide}
+\centering
+\includegraphics[width=0.48\linewidth]{fig/hyper1.png}
+\hfill
+\includegraphics[width=0.48\linewidth]{fig/hyper2.png}
+\end{wide}
+\caption{HyperCard. (Screenshot from Archive.org \cite{countant-1994-arthistory})}
+\label{fig:hyper}
+\end{figure}
+
+\subsection{Successful: HyperCard, Spreadsheets and Jupyter}
 \paragraph{HyperCard}
 \paragraph{Spreadsheets}
 \paragraph{Jupyter}
 
-\subsection{Boxer}
-boxer \cite{disessa-1986-boxer}
-
-\subsection{Subtext}
+\subsection{Current Research: Subtext and BootstrapLab}
 subtext \cite{edwards-2005-subtext}
 see the direct programming video - https://vimeo.com/274771188
 
@@ -536,7 +649,7 @@ refer to the design choice as \emph{Metaprogramming Capabilities}.
 \begin{itemize}
 \item \emph{No Metaprogramming.} In many document-oriented programming systems, computation can
   only produce results that are displayed in the document (Spreadsheets~\cite{abraham-2009-spreadsheets},
-  Idyll \cite{conlen-2018-idyll}, Boxer \cite{disessa-1986-boxer}, Potluck \cite{litt-2022-potluck}).
+  Idyll \cite{conlen-2018-idyll}, Potluck \cite{litt-2022-potluck}).
 \item \emph{Limited Metaprogramming.} In most notebook systems, code written by the user cannot
   arbitrarily modify the structure of the notebook, but there may be a special operation
   for, for example, adding a new cell (Jupyter \cite{kluyver-2016-jupyter},
@@ -544,7 +657,7 @@ refer to the design choice as \emph{Metaprogramming Capabilities}.
 \item \emph{Document Metaprogramming.} In a number of document-oriented programming systems, code
   running in the system has the capabilities to freely modify the structure of the document,
   but it cannot modify the system itself (HyperCard \cite{atkinson-1987-hypercard},
-  Webstrates \cite{petricek-2018-wrattler}, Wrattler \cite{petricek-2018-wrattler}).
+  Webstrates \cite{petricek-2018-wrattler}, Wrattler \cite{petricek-2018-wrattler}, Boxer \cite{disessa-1986-boxer}).
 
 \item \emph{Full Metaprogramming.} Only document-oriented programming systems where much of the
   system itself is implemented within itself can be modified from within code in the document.
@@ -629,6 +742,8 @@ default value and results in the change being applied to all items of the collec
 In Subtext 10, default values were also proposed for function arguments.
 
 \section{Design Choices: Graphical Interface}
+\label{sec:gui}
+
 Whereas some of the design choices related to structure (\S\ref{sec:struct}) and
 programming~(\S\ref{sec:prog}) coincided with the more general technical dimensions
 \cite{jakubovic-2023-techdims}, the design choices concerning user interface are
@@ -724,6 +839,8 @@ can, for example, display a document visually, but use a plain text editor.
 \end{itemize}
 
 \section{Design Choices: Evaluation}
+\label{sec:eval}
+
 The fourth and last category of design choices discussed in this paper relate to how are
 computations in a document-oriented programming system evaluated. The design aspect is related
 to the choice of a \emph{Programming Model} (\S\ref{sec:prog-model}), but here we focus more
@@ -883,10 +1000,6 @@ selectors to make merging tractable \cite{petricek-2025-denicek}).
 % TODO: Where to put Forms/3 - ask Jonathan
 % https://web.archive.org/web/20220120223923/http://cajun.cs.nott.ac.uk/compsci/epo/papers/volume7/issue2/ep078vq.pdf
 
-% TODO
-% * Jupyter - customization - not possible from inside the document
-% * interaction - but within the main mode, you have sub modes for code editing/running
-
 \cite{petricek-2018-wrattler}
 \cite{kluyver-2016-jupyter}
 forms/3 \cite{burnett-2001-forms3}
@@ -907,7 +1020,7 @@ hazel \cite{omar-2021-livelits} \cite{omar-2017-hazelnut}
 webstrates \cite{klokmose-2015-webstrates}
 
 potluck \cite{litt-2022-potluck}
-embark \cite{sonnentag-2023-embark}
+%embark \cite{sonnentag-2023-embark}
 
 ampleforth can be anything
 
@@ -939,7 +1052,7 @@ denicek \cite{petricek-2025-denicek}
 webstrates \cite{klokmose-2015-webstrates}
 
 potluck \cite{litt-2022-potluck}
-embark \cite{sonnentag-2023-embark}
+%embark \cite{sonnentag-2023-embark}
 
 \section{Related work}
 not about programming sytems \cite{crichton-2024-document}
