@@ -88,7 +88,13 @@ He has been a researcher at MIT CSAIL and CDG/HARC. He tweets \href{https://x.co
 \affiliation[b]{Independent, Boston, MA, USA}
 
 \author[a]{Joel Jakubovic}[0000-0003-0252-9066]
-\authorinfo{todo}
+\authorinfo{is a post-doctoral researcher at Charles University interested in
+overcoming pervasive ``premature commitment'' in programming. His PhD at
+University of Kent was about creating programming systems that combine
+self-sustainability and notational freedom.
+Send him an e-mail at \email{jakubovic@d3s.mff.cuni.cz} and read his blog at
+\href{https://programmingmadecomplicated.wordpress.com}{\texttt{programmingmadecomplicated.wordpress.com}}.
+ }
 
 
 % \authorrunning{T. Pape, C. Lopes, R. Hirschfeld} % Optional, for long author lists
@@ -134,11 +140,11 @@ He has been a researcher at MIT CSAIL and CDG/HARC. He tweets \href{https://x.co
 Many interesting programming systems treat programming as document manipulation.
 Examples include spreadsheets, data science notebooks, educational environments like Boxer and
 multiple recent research programming systems. In such systems, the programmer interacts with a
-document that contains a structured representation of both code and data, they modify the code
+document containing a structured representation of both code and data. They modify the code
 and data, trigger computations and view the results from the unified document interface.
 %
 % Inquiry: What problem or question does the paper address? How has this problem or question been addressed by others (if at all)?
-Those \emph{document-oriented programming systems} have a unique set of design choices. The
+Those \emph{document-oriented programming systems} have a specific set of design choices. The
 concepts that we need to understand them and design them differ from the well-understood design
 choices known from programming languages and other programming systems.
 
@@ -147,14 +153,15 @@ The aim of this paper is to identify the key design choices that characterise di
 document-oriented programming systems. We review both historical and recent examples of such
 systems and identify twelve design choices that cover four aspects of the system design:
 (i) what structure and representation of document they use,
-(ii) how is programming done within the systems,
+(ii) how is programming embedded within the systems,
 (iii) how the user interface displays documents and allows for their editing,
 and (iv) how are computations within the system evaluated.
 
 % Grounding: What argument, feasibility proof, artifacts, or results and evaluation support this work?
-The catalogue is rooted in our own need to understand design choices and their consequences when
+The catalogue refines our earlier work on technical dimensions of programming systems.
+It is rooted in our need to understand the design choices and their consequences when
 designing multiple different document-oriented programming systems over the last multiple years.
-It provides a high-level map of the design space of document-oriented programming systems,
+The catalogue provides a high-level map of the design space of document-oriented programming systems,
 makes it possible to identify differences and similarities across different systems and also
 suggests under-explored design choices and combinations of choices as areas for future research.
 
@@ -185,7 +192,7 @@ In Boxer \cite{disessa-1986-boxer}
 Executing a box runs the code, which can make changes to the document.
 In Jupyter \cite{kluyver-2016-jupyter} (right), documents consist
 of sequence of cells. The results of evaluating a code cell are displayed in the document, but the
-full state is managed by the hidden underlying kernel.}
+full state is managed by the underlying hidden kernel.}
 \label{fig:systems}
 \end{figure}
 
@@ -195,19 +202,19 @@ Document-oriented programming systems are programming environments that are buil
 interface modelled after a document editor. The document interface is typically used
 for editing the underlying program, for executing the program or its fragments, as well as
 for using interactive elements embedded in the document. The origins of the paradigm can be
-traced to the 1980s \cite{disessa-1986-boxer} and the paradigm has a rich history, but there has
+traced to the 1980s \cite{disessa-1986-boxer}. The paradigm has a rich history, but there has also
 been a renewed interest in the design of document-oriented programming systems in recent years,
 both in practice and in research (Figure~\ref{fig:systems}).
 
-As historical, as well as recent, examples of document-oriented programming systems illustrate,
+As the examples of document-oriented programming systems illustrate,
 there are many ways in which the document metaphor can be used as the basis for a programming
 system. In particular, there is a great variety in the kind of document structure used,
-in how rich user interfaces are embedded within the document, in how programming is integrated
-with the document and also in how computations are executed.
+how rich user interfaces are embedded within the document, how programming is integrated
+with the document and also how computations are executed.
 
-We argue that to advance research on document-oriented programming systems, we need to (i)~precisely
-characterise what a document-oriented programming system~is, (ii) understand the design
-choices available to the designers of document-oriented programming systems, and (iii)
+We argue that to advance research on document-oriented programming systems, we need to precisely
+characterise what a document-oriented programming system~is, understand the design
+choices available to the designers of document-oriented programming systems, and
 document the design choices made in existing document-oriented programming systems.
 
 \subsection{Definition}
@@ -275,14 +282,15 @@ and form an active research area.
 
 \begin{itemize}
 \item We characterize the notion of a document-oriented programming system in terms of the
-  technical dimensions framework (Section~\ref{sec:def}), going beyond the informal metaphor
-  of a programming system built around a structured document.
-\item We review a number of diverse past and recent examples of document-oriented programming
-  systems (Section~\ref{sec:examples}). These provide valuable reference points for discussion
-  about system design.
+  technical dimensions framework (Section~\ref{sec:def}).%,  going beyond the informal metaphor
+  %of a programming system built around a structured document.
+\item We review a number of document-oriented programming systems to provide reference points
+  for discussion about system design (Section~\ref{sec:examples}).
 \item We present a catalogue of twelve central design choices that designers of document-oriented
   programming systems face (Sections~\ref{sec:struct}, \ref{sec:prog}, \ref{sec:gui}, \ref{sec:eval}),
   alongside with interesting examples illustrating the different choices.
+\item We illustrate one of the uses of our catalogue (Section~\ref{sec:intro-using}) by
+  identifying four interesting under-explored combinations of design choices (Section~\ref{sec:directions}).
 \end{itemize}
 
 To develop the catalogue, we draw from our own experience developing multiple document-oriented programming systems
@@ -291,6 +299,7 @@ extensive literature review and also discussions at multiple workshops dedicated
 future programming systems (Boxer Salon 2022, Substrates 2025).
 
 \subsection{Using this Paper}
+\label{sec:intro-using}
 
 Tha aims of this paper are to highlight an interesting programming systems paradigm, develop a better
 understanding of the design choices within the paradigm and facilitate further research on
@@ -333,15 +342,15 @@ systems that appear frequently as examples in our catalogue.
 \subsection{Historical Origins: Boxer}
 The Boxer system \cite{disessa-1986-boxer,disessa-1985-design} was developed in the early 1980s
 as an educational interactive computational environment. One of the envisioned use cases of
-the system was production of interactive textbooks. The readers of such textbook would be able
+the system was the writing of interactive textbooks. The readers of such textbook would be able
 to explore interactive explanations in the textbook, modify parameters, but also see the
 logic implementing the explanations and potentially customize it (Figure~\ref{fig:book}).
 
 In Boxer, the document consists of nested boxes. There are two main kinds of boxes.
-{\sc Data} boxes contain text, graphics and other boxes. {\sc Doit} boxes contain program
-text and other {\sc Doit} and {\sc Data} boxes \cite[p.2]{klotz-1989-boxer}. Boxes are used
+{\scshape Data} boxes contain text, graphics and other boxes. {\scshape Doit} boxes contain program
+text, other {\scshape Doit} and {\scshape Data} boxes \cite[p.2]{klotz-1989-boxer}. Boxes are used
 to represent structured data (such as a collection of records) as well as nesting structure
-in code (body of a loop). The system also includes {\sc Graphics} boxes that can display
+in code (body of a loop). The system also includes {\scshape Graphics} boxes that can display
 visual output and respond to user interactions.
 
 The Boxer environment lets the user manipulate the document. They can create new boxes, modify
@@ -353,12 +362,12 @@ entirety'' \cite[p.3]{disessa-1986-boxer}. Boxes can be shrunk to hide their con
 even put in closets to hide them \cite{disessa-2021-structures}, but they are always present
 in the document and can always be located and accessed.
 
-Computation in Boxer is represented as code in {\sc Doit} boxes. The code can be executed by
+Computation in Boxer is represented as code in {\scshape Doit} boxes. The code can be executed by
 clicking on the box. Conceptually, evaluation of code is based on \emph{copying semantics}.
 When the running code references another box, the evaluation behaves as if the referenced box
 was copied in the place where it is referenced from. (The consequence of this model is that
 the system uses dynamic variable scoping.) Computation can modify state of the document. If
-it also produces a result, the result is placed in a new {\sc Data} box in the document.
+it also produces a result, the result is placed in a new {\scshape Data} box in the document.
 
 Boxer also provides a range of functions for manipulating boxes in the document.
 For example, the \texttt{BUILD} command can be used to construct a new box from a box
@@ -377,30 +386,139 @@ logic remains hidden from the user and cannot be modified directly from within B
 \label{fig:hyper}
 \end{figure}
 
-\subsection{Successful: HyperCard, Spreadsheets and Jupyter}
-\paragraph{HyperCard}
-\paragraph{Spreadsheets}
-\paragraph{Jupyter}
+\subsection{Commercial Success: HyperCard, Spreadsheets and Jupyter}
+Boxer illustrates many of the key aspects of document-oriented programming systems, but it
+is not widely known. However, there has also been a number of systems that are based on a
+less interesting combination of design choices, but were widely used.
+
+\paragraph{HyperCard.}
+In HyperCard (Figure~\ref{fig:hyper}), the document is a stack of cards that contain graphics,
+text and interactive elements. As usual for document-oriented programming systems, both the
+editing and using of programs is done through the same document interface. What the user can do
+with a document is determined by the current user level, ranging from Browsing (just viewing)
+to Painting (change text and graphics) and Scripting (specify actions, write code).
+
+Simple interactivity can be implemented by linking buttons to cards (when a button is clicked,
+the specified card is displayed). Further logic can be implemented by writing scripts in the
+HyperTalk programming language. Scripts can be attached to document elements, they
+are imperative and can modify the document. In particular, they can create and delete objects
+and change their properties. Unlike in Boxer, HyperTalk scripts are represented as textual
+properties of elements. They are not normally displayed as part of a card and are edited through
+a text editor in a separate window.
+
+HyperCard exhibits the key characteristics of a document-oriented programming system. The user
+works with it through a document structure (stack of cards) and they can modify program while using
+it. HyperTalk is a text-based scripting language, but scripts can access and modify the document.
+
+\paragraph{Spreadsheets.}
+Spreadsheets are a prime example of a successful end-user programming system \cite{nardi-1993-small}.
+Like HyperCard, they satisfy the criteria for a document-oriented programming system.
+The document structure is a grid of cells and the user edits and runs the programs they create
+through the document interface.
+
+Unlike in HyperCard or Boxer, evaluation in spreadsheets is immediate and the computation
+results update as soon as data or a formula is modified. The basic programming model is based
+on a formula language. Formulas can refer to other cells (using a relative or an absolute location
+reference) and produce results that are displayed in the spreadsheet. Formula evaluation does not
+modify the document. The system displays the results in the cells, but the underlying document
+remains unchanged (i.e., a formula in a cell is not \emph{replaced} with the result).
+A range of different variations on spreadsheets has been explored \cite{bock-2016-spreadsheet},
+including spreadsheets with a more expressive formula language, user-defined functions and
+static type checking.
+
+As document-oriented programming system, spreadsheets have a very regular and limited
+document structure, but it serves as a primary notation and an interface for both using and
+programming. They are also interesting for their reactive evaluation.
+
+\paragraph{Jupyter.}
+Notebook systems for data science such as Jupyter \cite{kluyver-2016-jupyter} (Figure~\ref{fig:systems},
+right) are also document-oriented programming systems. The document structure is a notebook, consisting
+of a sequence of rich text blocks, code cells and program outputs. The notebook interface lets
+the user edit the notebook, run computations, review the results and possibly also change
+computation parameters interactively \cite{jupyter-2025-widgets}.
+
+The document structure in notebook systems is a simple list of cells. Code included in the notebook
+typically does not manipulate the document directly. It performs some computation and the
+result of the computation is visualized by the notebook system using a table, chart or another
+kind of custom visualization. In Jupyter, the runtime state is maintained by a background
+kernel process and executed code snippets from the notebook modify the state. (An out-of-order
+execution of cells can result in an inconsistent state, an issue that some systems aim to address
+by automatic invalidation based on a dependency graph \cite{petricek-2018-wrattler}.)
+
+In notebook systems, the user again works with a document, although they mostly edit code in an
+embedded text-based code editor. The document state exists in a background process, which sets
+Jupyter apart from other document-oriented programming systems discussed in this section.
+
+~
 
 \subsection{Current Research: Subtext and BootstrapLab}
-subtext \cite{edwards-2005-subtext}
-see the direct programming video - https://vimeo.com/274771188
 
-list of edits
-tree of records and lists
-live evaluation of formulas like spreadsheets
-code (formula / ast) is also a record with fields for individual operations
-functional model
-native GUI with no custom projections
-evaluation is live
-final state is an annotation added to the doc
+The systems discussed in the previous section structure programs as documents and use the
+document interface for their editing, but they do not use the document itself for structuring
+code and for evaluation, an approach suggested by Boxer. A number of research projects aim to
+explore this direction \cite{edwards-2005-subtext,petricek-2025-denicek,jakubovic-2022-bootstraplab}.
 
-\subsection{BootstrapLab}
-xx
+\paragraph{Subtext.}
+Subtext is a series of research document-oriented programming systems \cite{edwards-2025-retro}
+Most systems of the Subtext family use a document structured as a tree. Data and code are
+also represented using a tree structure. For example, a conditional expression is a tree node
+with two sub-trees for the two cases, similarly to how Boxer used nested boxes. Manipulating the
+document is also the mechanism for using programs created using Subtext. A computation can be
+triggered by updating an input value or through the graphical user interface and the result will
+appear in the document.
 
+Subtext experimented with a number of interesting aspects of the programming model and program
+evaluation. In Subtext~1 \cite{edwards-2005-subtext}, the programming model is based on concrete
+examples and copying. Programs are constructed by creating examples, constructing computations
+with concrete values (as in spreadsheets). Code reuse is achieved by copying and modifyign
+examples. In terms of technical dimensions \cite{jakubovic-2023-techdims}, Subtext's
+\emph{Abstraction Construction} proceeds from concrete cases.
 
+Another central theme in Subtext is the use of \emph{materialized execution}. Rather than reducing
+a function call with a parameter to the result of the call, Subtext lets the user explore the
+individual steps of the execution. The call node can be expanded to see a sub-tree containing
+a copy of the function called, with the function parameter replaced with the actual argument.
+Inspired by an earlier implementation of the mechanism \cite{edwards-2004-example},
+Subtext 7 \cite{edwards-2017-reifying} also allowed users to modify the execution traces.
+This makes it possible, for example, to debug test failures and see what alternative executions
+would lead to the correct result.
 
-\newpage
+Subtext~8~\cite{edwards-2018-directprog} introduced a different underlying representation of the
+document. Rather than storing the document itself, the primary representation of the document
+becomes a history of edit actions through which the document is performed. The representation erases
+the distinction between program execution and user interaction. Whatever can be done by running
+a program can also be done by the user through direct manipulation. A sequence of past actions
+can also be lifted into a reusable entity, providing a mechanism for programming by demonstration.
+
+Successors to Subtext including Baseline \cite{edwards-2025-baseline} and Denicek
+\cite{petricek-2025-denicek} further refine the model based on edit history to support
+collaborative development, schema change management and other user experiences.
+
+\paragraph{BootstrapLab.}
+BootstrapLab \cite{jakubovic-2022-bootstraplab} is a prototype document-oriented programming system
+that explores how can the structured document representation be combined with self-sustainability.
+This property, known from systems such as Smalltalk, refers to the ability to construct most
+of the programming system using itself. This focus results in a number of interesting design
+choices regarding the system's programming model and an approach to constructing the graphical
+user interface.
+
+BoostrapLab is based on a mutable document. The basic built-in programming mechanism is a
+low-level assembly-like language that can be used to create programs that modify the document
+tree structure. (Instructions in the language are ordered sub-nodes in the tree that are
+executed one by one.) However, BootstrapLab then imagines using this low-level language to
+create a high-level functional language with an interpreter that would work similarly to the
+evaluation model of Subtext, i.e., by attaching the steps of the evaluation process, as well as
+the final result, to the document tree. Unlike in Subtext, this functionality would not be
+built-in feature of the system, but something built within the system, using its low-level
+capabilities.
+
+BootstrapLab also shows that the user interface for editing documents does not have to be
+built-in as in most other document-oriented programming systems. To achieve this, BootstrapLab
+treats a particular sub-tree of the document as a memory-mapped display containing a tree
+structure that defines what the user sees as a tree-structured vector graphics akin to SVG.
+BootstrapLab programs can modify the memory-mapped display to, for example, visually render a
+part of the document tree and allow its editing through a tree view, reconstructing the graphical
+interface known from Subtext.
 
 \section{Design Choices: Structure}
 \label{sec:struct}
@@ -418,10 +536,10 @@ programming systems, the shape is a tree consisting of different kinds of nodes.
 \item \emph{Tree-Shaped Documents.} The tree can be displayed directly to user using
   some form of tree view widget that lets users directly manipulate the tree
   (Subtext \cite{edwards-2005-subtext}, BootstrapLab \cite{jakubovic-2022-bootstraplab}).
-  The tree can be modelled after (or built directly on top of) structured mixed-media
-  documents such as HTML (Webstrates \cite{klokmose-2015-webstrates}, Webnicek \cite{petricek-2025-denicek}),
-  in which case the user can often view and edit the document directly (WYSIWYG) or
-  through a source view (tree view widget).
+  The tree can be modelled after forms (Forms/3~\cite{burnett-2001-forms3}) or structured
+  mixed-media documents such as HTML (Webstrates \cite{klokmose-2015-webstrates},
+  Webnicek \cite{petricek-2025-denicek}), in which case the user can often view and edit
+  the document directly (WYSIWYG) or through a source view (tree view widget).
 
 \item \emph{Sequence of Cells.} Computational notebooks for data science
   (Jupyter \cite{kluyver-2016-jupyter}, Wrattler \cite{petricek-2018-wrattler}, Datnicek \cite{petricek-2025-denicek})
@@ -471,7 +589,7 @@ the two aspects are referred to as \emph{surface notation} and \emph{internal no
 \item \emph{Document Itself.} In many systems, their internal
   notation closely resembles to the surface notation and what they display to the user is a
   direct rendering of their document representation (Boxer~\cite{disessa-1986-boxer},
-  HyperCard~\cite{atkinson-1987-hypercard}, Jupyter~\cite{kluyver-2016-jupyter}).
+    HyperCard~\cite{atkinson-1987-hypercard}, Jupyter~\cite{kluyver-2016-jupyter}, Forms/3~\cite{burnett-2001-forms3}).
 
 \item \emph{Underlying Model.} Document-oriented programming systems can be embedded in
   another programming system with a more basic underlying representation. This can be a
@@ -480,7 +598,7 @@ the two aspects are referred to as \emph{surface notation} and \emph{internal no
 
 \item \emph{Edit History.} In a number of systems, the ground truth is not the document itself,
   but a sequence of edit operations through which the document has been created
-  (Subtext~\cite{edwards-2018-directprog,edwards-2021-typed}, Denicek~\cite{petricek-2025-denicek}).
+  (Subtext~8~\cite{edwards-2018-directprog}, Denicek~\cite{petricek-2025-denicek}, Baseline~\cite{edwards-2025-baseline,edwards-2021-typed}).
   The document is computed by reapplying the operations, but the history can be used
   to implement programming by demonstration.
 \end{itemize}
@@ -510,13 +628,18 @@ mechanisms (possibly posing an interesting open question for the future of the p
   existing inside the document (Boxer~\cite{disessa-1986-boxer}), as well as content that may
   exist elsewhere in the underlying model (Ampleforth \cite{bracha-2022-ampleforth}).
 
-\item \emph{Internal References.} A more basic mechanism for modularity and code reuse is a
+\item \emph{Internal References.} A simpler mechanism for code reuse is a
   reference to an entity defined elsewhere in the document. (See \S\ref{sec:eval-ident} for
   different referencing mechanisms.) Unlike with transclusions, the entity is not displayed in the
-  document location where it is referenced (the user typically sees the entity name). The
-  reference can refer to functions (BootstrapLab~\cite{jakubovic-2022-bootstraplab}),
-  interactive components (Livelits~\cite{omar-2021-livelits}), or more generally ancestral
-  nodes (Subtext~\cite{edwards-2005-subtext}).
+  document location where it is referenced (the user typically sees the entity name).
+  References can refer to functions (BootstrapLab~\cite{jakubovic-2022-bootstraplab}) or
+  interactive components (Livelits~\cite{omar-2021-livelits}).
+
+\item \emph{Managed Copy and Paste.} Several systems encourage users to reuse code using copy \&
+  paste, but keep track of the copies (Subtext~\cite{edwards-2005-subtext},
+  Baseline~\cite{edwards-2022-copy}, Forms/3~\cite{burnett-2001-forms3}, Denicek formulas
+  \cite{petricek-2025-denicek}). A change made to a copy
+  can be local (change of input), or propagate back to the source (fixing a bug).
 
 \item \emph{External References.} In many document-oriented programming systems, the ability to
   define new abstractions within the document is limited and so modular components or code
@@ -527,7 +650,7 @@ mechanisms (possibly posing an interesting open question for the future of the p
   is a history of edits (see \S\ref{sec:struct-repr}), it is also possible to spcify behavior
   by referring to a part of the history (replaying the edits then performs the behavior again).
   The mechanism can be used to implement programming by demonstration \cite{cypher-1993-pbd}
-  (Subtext \cite{edwards-2005-subtext}, Denicek \cite{petricek-2025-denicek}).
+  (Subtext~8~\cite{edwards-2005-subtext}, Denicek \cite{petricek-2025-denicek}).
 \end{itemize}
 
 \begin{figure}[t]
@@ -551,38 +674,6 @@ to create a list of objects (existing elsewhere in a document) to be processed. 
 Boxer supports named references to variables and procedures, ports can also be used for this
 purpose to avoid name mix-ups.
 
-\begin{figure}[t]
-\begin{wide}
-  \centering
-  \begin{minipage}[t]{0.38\textwidth}\vspace{0pt}
-  {\footnotesize \textbf{(a)} Sequence of instructions}
-
-  \vspace{1em}
-  \includegraphics[scale=0.38]{fig/blab-instr.png}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.38\textwidth}\vspace{0pt}
-  {\footnotesize \textbf{(b)} Textual MASP notation}
-
-  \vspace{1em}
-  \includegraphics[scale=0.4]{fig/blab-masp.png}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.38\textwidth}\vspace{0pt}
-  {\footnotesize \textbf{(c)} Box-based MASP notation}
-
-  \vspace{1em}
-  \includegraphics[scale=0.4]{fig/blab-vis.png}
-  \end{minipage}
-\end{wide}
-\caption{Two different programming models in BootstrapLab~\cite{jakubovic-2022-bootstraplab}.
-\textbf{(a)} Imperative instructions to mutate document that read the top of a stack and store the
-result in a register (a special document node). \textbf{(b)} A functional document transformation
-that replaces \texttt{color} field with a filled rectangle that has the given color. \textbf{(c)}
-Visual rendering of the same MASP code. (Image source \cite{jakubovic-2024-self})}
-\label{fig:blab}
-\end{figure}
-
 \section{Design Choices: Programming}
 \label{sec:prog}
 An essential characteristic of document-oriented programming systems is that they allow some
@@ -600,12 +691,13 @@ standard programming language paradigms.
   consists of operations that mutate some state (see \S\ref{sec:eval-state}). In some
   systems, commands can modify the document itself (HyperCard~\cite{atkinson-1987-hypercard},
   Ampleforth \cite{bracha-2022-ampleforth}, Boxer~\cite{disessa-2021-structures},
-  Webstrates~\cite{klokmose-2015-webstrates}), while in others, commands can only modify state
+  Webstrates~\cite{klokmose-2015-webstrates}, Subtext~8~\cite{edwards-2018-directprog}),
+  while in others, commands can only modify state
   that exists behind the scene but not the document structure (Jupyter \cite{kluyver-2016-jupyter}).
 
 \item \emph{Declarative.} In the declarative model, code in the document describes a computation
-  that should be performed in order to obtain some result (Subtext~\cite{edwards-2005-subtext},
-  Spreadsheets~\cite{abraham-2009-spreadsheets}). The result may be displayed alongside
+  that should be performed in order to obtain some result (Subtext~7~\cite{edwards-2017-reifying},
+  Forms/3~\cite{burnett-2001-forms3}). The result may be displayed alongside
   the document, or placed in the document (see \S\ref{sec:eval-state}), but the code
   does not explicitly modify the document.
 
@@ -625,17 +717,48 @@ standard programming language paradigms.
 BootstrapLab \cite{jakubovic-2022-bootstraplab} shows that a document-oriented programming
 system may support multiple different programming models. The primitive programming model in
 BootstrapLab is imperative. Code is represented as a sequence of low-level instructions that
-modify a set of registers (Figure~\ref{fig:blab} (a)). The instruction pointer register
-determines the next instruction to be executed. The programming model includes operations such
-as key lookup, copying, and conditional jump.
+modify a set of registers, stored in a known location in the document tree (Figure~\ref{fig:blab} (a)).
+The special instruction pointer register is a reference to the next instruction to be executed.
+The low-level programming model includes operations such as key lookup, copying, and conditional jump.
 
 A high-level programming model envisioned in BootstrapLab is the MASP language, modelled after
-LISP (Figure~\ref{fig:blab} (b)). The document structure (nested maps) represents the abstract
-syntax tree of functional-first programs. The code can be rendered as textual tree, but also
-visually (Figure~\ref{fig:blab} (c)). The MASP interpreter stores all immediate information,
-as well as the final result, directly in the document (see~\S\ref{sec:eval-state}).
-Although this was not done in the BootstrapLab prototype, a MASP interpreter or compiler
-could be built in the low-level programming model.
+LISP (Figure~\ref{fig:blab} (b)), but using maps instead of lists. The document structure (nested
+maps) represents the abstract syntax tree of functional-first programs. The code can be rendered
+as a textual tree, but also visually (Figure~\ref{fig:blab} (c)). The MASP interpreter stores all
+immediate information, as well as the final result, directly in the document (see~\S\ref{sec:eval-state}).
+Although this was not fully implemented in the BootstrapLab prototype, a MASP interpreter or
+compiler could be built using the low-level programming model.
+
+\begin{figure}[b]
+\begin{wide}
+  \begin{minipage}[t]{0.38\textwidth}\vspace{0pt}
+  {\footnotesize \textbf{(a)} Sequence of instructions}
+
+  \vspace{0.5em}
+  \includegraphics[scale=0.4]{fig/blab-instr.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.38\textwidth}\vspace{0pt}
+  {\footnotesize \textbf{(b)} Textual MASP notation}
+
+  \vspace{0.5em}
+  \includegraphics[scale=0.45]{fig/blab-masp.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.34\textwidth}\vspace{0pt}
+  {\footnotesize \textbf{(c)} Box-based MASP notation}
+
+  \vspace{1em}
+  \includegraphics[scale=0.45]{fig/blab-vis.png}
+  \end{minipage}
+\end{wide}
+\caption{Two different programming models in BootstrapLab~\cite{jakubovic-2022-bootstraplab}.
+\textbf{(a)} Imperative instructions to mutate document that read the top of a stack and store the
+result in a register (a special document node). \textbf{(b)} A functional document transformation
+that replaces \texttt{color} field with a filled rectangle that has the given color. \textbf{(c)}
+Visual rendering of the same MASP code. (Image source \cite{jakubovic-2024-self})}
+\label{fig:blab}
+\end{figure}
 
 \subsection{Metaprogramming Capabilities}
 \label{sec:prog-meta}
@@ -649,7 +772,7 @@ refer to the design choice as \emph{Metaprogramming Capabilities}.
 \begin{itemize}
 \item \emph{No Metaprogramming.} In many document-oriented programming systems, computation can
   only produce results that are displayed in the document (Spreadsheets~\cite{abraham-2009-spreadsheets},
-  Idyll \cite{conlen-2018-idyll}, Potluck \cite{litt-2022-potluck}).
+  Idyll \cite{conlen-2018-idyll}, Potluck \cite{litt-2022-potluck}, Forms/3~\cite{burnett-2001-forms3}).
 \item \emph{Limited Metaprogramming.} In most notebook systems, code written by the user cannot
   arbitrarily modify the structure of the notebook, but there may be a special operation
   for, for example, adding a new cell (Jupyter \cite{kluyver-2016-jupyter},
@@ -680,8 +803,7 @@ We consider these two aspects together as a signle design choice.
 \begin{itemize}
 \item \emph{Naive Realism} vs. \emph{Hidden Representation.} In the naive realism model,
   everything that exists in the system is available in the document (Boxer \cite{disessa-1986-boxer},
-  Jupyter \cite{kluyver-2016-jupyter}, Subtext \cite{edwards-2005-subtext}).%\footnote{The
-  %term \emph{naive realism} has been coined by diSessa in the context of Boxer.}.
+  Jupyter \cite{kluyver-2016-jupyter}, Subtext \cite{edwards-2005-subtext}, Forms/3~\cite{burnett-2001-forms3}).
   In contrast, systems where code exists outside of the document use the
   hidden representation model (HyperCard \cite{atkinson-1987-hypercard},
   Ampleforth \cite{bracha-2022-ampleforth}).
@@ -724,13 +846,14 @@ what is considered a well-formed document structure.
 
 \item \emph{Explicit Structure.} In some systems, the document structure can be explicit
   using a mechanism such as a type system or using prototypes. This is an under-explored area of
-  research in programming systems (Subtext'21 \cite{edwards-2021-typed}), but examples
-  exist in document manipulation (XDuce \cite{hosoya-2003-xduce}, Ur/Web \cite{chlipala-2015-urweb}).
+  research in programming systems (Subtext~10~\cite{edwards-2021-subtext10},
+  Baseline~\cite{edwards-2021-typed}), but examples exist in document manipulation
+  (XDuce \cite{hosoya-2003-xduce}, Ur/Web \cite{chlipala-2015-urweb}).
 \end{itemize}
 
 \paragraph{Example: Subtext 10 and Baseline.}
-An example of a system with explicitly checked document structure is Subtext~10~\cite{edwards-2021-subtext10}
-(which served as the basis for a more recent prototype implementation Baseline~\cite{edwards-2025-baseline}).
+An example of a system with explicitly checked document structure is Subtext~10~\cite{edwards-2021-subtext10},
+which served as the basis for a more recent prototype implementation Baseline~\cite{edwards-2025-baseline}.
 Subtext 10 uses a form of static type checking that is based on concrete values. The type of a
 collection is determined by a special element (with index \texttt{*}) that serves as a default
 value (or a prototype \cite{borning-1986-prototypes}).
@@ -750,6 +873,8 @@ programming~(\S\ref{sec:prog}) coincided with the more general technical dimensi
 new in this paper. We consider two complementary mechanisms, for display and for editing.
 
 \subsection{Display Mechanism}
+\label{sec:gui-display}
+
 A defining characteristic of document-oriented programming systems (\S\ref{sec:def})
 is that the user sees and interacts with a document. There are multiple display mechanisms
 through which the document can appear on screen.
@@ -766,7 +891,7 @@ through which the document can appear on screen.
   expressive, custom graphical elements can be implemented as widgets that are defined outside
   of the document itself. They can then be created programatically from within the document
   or used automatically to display (end edit) specific types of values. (Livelits~\cite{omar-2021-livelits},
-  Jupyter Widgets~\cite{jupyter-2025-widgets}).
+  Jupyter Widgets~\cite{jupyter-2025-widgets}, Forms/3~\cite{burnett-2001-forms3}).
 
 \item \emph{API Calls.} Document-oriented programming systems where code exists outside of the
   document can modify the displayed document through some API provided by the system, for example
@@ -847,6 +972,8 @@ to the choice of a \emph{Programming Model} (\S\ref{sec:prog-model}), but here w
 specifically on how the evaluation of code happens.
 
 \subsection{Evaluation Mode}
+\label{sec:eval-mode}
+
 The first choice is concerend with what triggers evaluation. The different choices have been
 discussed extensively in the context of live programming and our list below partly follows the
 established levels of liveness \cite{tanimoto-1990-viva,tanimoto-2013-live}. In technical
@@ -862,7 +989,7 @@ of \emph{feedback loops}.
   the affected parts of the document when code or data change. This is a widely used approach
   for declarative systems and systems focusing on small code snippets
   (Spreadsheets \cite{abraham-2009-spreadsheets}, Potluck \cite{litt-2022-potluck},
-  Ampleforth \cite{bracha-2025-example}).
+  Ampleforth \cite{bracha-2025-example}, Forms/3~\cite{burnett-2001-forms3}).
 
 \item \emph{Live Update.} The last mode refers to systems where ongoing evaluation reflects
   changes to data and code made during evaluation (liveness level 4 \cite{tanimoto-1990-viva}).
@@ -902,12 +1029,15 @@ during (or at the end of) the evaluation.
   document and can be accessed from other code inside the document, for example in order to
   analyse provenance or execution of tests. The approach has only been implemented experimentally
   and would require optimization to work well in practice
-  (Denicek \cite{petricek-2025-denicek}, Subtext'17~\cite{edwards-2017-reifying}, BootrstrapLab/MASP \cite{jakubovic-2022-bootstraplab}).
+  (Denicek \cite{petricek-2025-denicek}, Subtext~7~\cite{edwards-2017-reifying},
+  BootrstrapLab/MASP \cite{jakubovic-2022-bootstraplab}).
 \end{itemize}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.9\linewidth]{fig/stepper.png}
+\vspace{-1em}
+\includegraphics[width=0.85\linewidth]{fig/stepper.png}
+\vspace{-0.5em}
 \caption{First six step of the execution of \texttt{foo 10 20} in the Boxer movie stepper.
   The box above shows the original source code. The box below shows the successive steps.
   (1) The evaluation starts, (2) function definition repalces the
@@ -915,6 +1045,7 @@ during (or at the end of) the evaluation.
   boxes passed as arguments and (6) \texttt{x} is replaced with the variable value.
   (Image source~\cite{klotz-1989-boxer})}
 \label{fig:stepper}
+\vspace{-0.5em}
 \end{figure}
 
 \paragraph{Example: Boxer.}
@@ -973,16 +1104,14 @@ and a programming system may support a combination of these.
 Identification of nodes poses an interesting problem in systems where document nodes can be
 moved and renamed, or in systems based on edit histories (see \S\ref{sec:struct-repr})
 where edits need to be merged or reconcilled. Two systems that tackle this problem are
-Subtext~\cite{edwards-2005-subtext} and Denicek \cite{petricek-2025-denicek}.
+Baseline~\cite{edwards-2025-baseline} and Denicek \cite{petricek-2025-denicek}.
 
-For example, say we have a document with a root node named \texttt{pioneers} containing two
+Consider a document with a root node \texttt{pioneers} containing two
 children named \texttt{lovelace} and \texttt{hamilton}. In Denicek, one can refer to a
 specific node using an \emph{Absolute Path} such as \texttt{/pioneers/lovelace} or to multiple
 nodes using a \emph{Selector} \texttt{/pioneers/*}. Subtext, by contrast, uses \emph{Internal Unique
 Identifiers} and the selection made by the user results in a collection of IDs, referring to
-the selected nodes.
-
-The first consequence of the design choice is how the systems handle renaming of nodes.
+the selected nodes. The design choice affects how the systems handle renaming.
 In Subtext, renaming \texttt{pioneers} to \texttt{compsci} has no effect on the unique
 identifiers. In Denicek, the operation requires updating all references, for example, from
 \texttt{/pioneers/*} to~\texttt{/compsci/*}.
@@ -996,77 +1125,136 @@ when the edit was done will be affected. On the other hand, merging of edits is 
 the system uses expressive language of selectors (and Denicek restricts the expressivity of
 selectors to make merging tractable \cite{petricek-2025-denicek}).
 
-\newpage
-% TODO: Where to put Forms/3 - ask Jonathan
-% https://web.archive.org/web/20220120223923/http://cajun.cs.nott.ac.uk/compsci/epo/papers/volume7/issue2/ep078vq.pdf
+\section{Research Directions}
+\label{sec:directions}
+One of the uses of the catalogue of design choices presented in this paper
+(see \S\ref{sec:intro}) is to identify interesting under-explored designs for
+document-oriented programming systems. We discuss four research directions that illustrate
+such use of the catalogue.
 
-\cite{petricek-2018-wrattler}
-\cite{kluyver-2016-jupyter}
-forms/3 \cite{burnett-2001-forms3}
+\paragraph{Metaprogramming over Execution Traces.}
+One of the choices for managing evaluation state (see \S\ref{sec:eval-state})
+is to use \emph{Materialized Execution} where individual steps of the execution are recorded
+as nodes in the document. This is only implemented in a few experimental systems
+and an efficient implementation requires further research.
+However, the model enables interesting capabilities, especially when combined with
+metaprogramming capabilities (see~\S\ref{sec:prog-meta}) that make it possible for computations
+inside the document to manipulate the document, i.e., the \emph{Document} or \emph{Full Metaprogramming}.
 
-Lopecode~\cite{larkworthy-2025-lopecodetour}
+A system with the two features would make it possible to create programs that analyze the
+execution of other programs embedded within the same document. This may be used for analysing
+unit test failures (using a diff of the failing execution and the last successful execution),
+to implement language-integrated provenance \cite{fahrenbach-2019-provenance} or to collect
+information for automatically generating linked data visualizations \cite{perera-2022-linked}.
 
-spreadsheets \cite{abraham-2009-spreadsheets}
-subtext \cite{edwards-2005-subtext}
-denicek \cite{petricek-2025-denicek}
-hypercard \cite{atkinson-1987-hypercard}
-jupyter \cite{kluyver-2016-jupyter}
-c.f. wrattler more live
-boxer \cite{disessa-1986-boxer}
+\paragraph{Memory-Mapped Display.}
+A design choice that has been explored briefly in BootstrapLab~\cite{jakubovic-2022-bootstraplab}
+is the use of \emph{Memory-Mapped Display} as the display mechanism (see~\S\ref{sec:gui-display}).
+The choice requires programming systems where computations can modify the document,
+i.e., support \emph{Document} or \emph{Full Metaprogramming} capabilities (see~\S\ref{sec:prog-meta}).
 
-ampleforth \cite{bracha-2022-ampleforth,bracha-2024-docuapps}
-bootrstraplab \cite{jakubovic-2022-bootstraplab}
-hazel \cite{omar-2021-livelits} \cite{omar-2017-hazelnut}
-webstrates \cite{klokmose-2015-webstrates}
+The choice makes it possible to build document-oriented programming systems where individual programs
+have full control of what the user sees. The design choice is akin to the design of the Smalltalk
+programming environment, which is itself implemented in Smalltalk and uses the primitive graphics
+API of the runtime with reflection in order to build tools such as the class browser \cite{goldberg-1984-orange}.
+The combination would make it possible to build a document-based equivalent of the Smalltalk design.
 
-potluck \cite{litt-2022-potluck}
-%embark \cite{sonnentag-2023-embark}
+\paragraph{Unifying Execution and Interaction.}
+A theme that has been suggested by Subtext~8~\cite{edwards-2018-directprog} is unifying
+program execution with user interaction. The combination of design choices that enables this
+is the use of \emph{Edit History} as the document representation (see~\S\ref{sec:struct-repr})
+together with \emph{Internalized} or \emph{Materialized Execution} evaluation state
+(see~\S\ref{sec:eval-state}). The combination means that evaluating code in a document
+generates edits that modify the document that are indistinguishable from edits that could be
+performed by the user through a graphical interface.
+The combination could enable a range of programming by demonstration user experiences
+where reusable programs are constructed by enacting the computation using sample concrete
+values as in Pygmalion~\cite{smith-1977-pygmalion}.
 
-ampleforth can be anything
+\paragraph{Variations on Spreadsheets.}
+Spreadsheet systems such as Excel can be characterized by using the \emph{Two-Dimensional Grid}
+as the document shape (see \S\ref{sec:struct-shape}), \emph{Declarative} programming model
+(see \S\ref{sec:prog-model}) with \emph{Implicitly Triggered} evaluation (\S\ref{sec:eval-mode})
+and the support for \emph{Absolute} and \emph{Relative References}
+as the node identification mechanism~(\S\ref{sec:eval-ident}).
 
+Interesting programming systems can be imagined by varying one of the design choices.
+One variation is to generalize the document shape from a regular two-dimensional grid to
+other structures. This combination has been partly explored by Forms/3 \cite{burnett-2001-forms3}
+and recently Nezt~\cite{bazant-2018-nezt}, but there are likely multiple other variations.
+It may also be interesting to generalize the node identification mechanism to arbitrary
+\emph{Selectors}, allowing the users to construct formulas that use more general queries
+to collect data from the spreadsheet.
 
-
-
----
-
-\cite{ohshima-2025-renkonpad} -- maybe not exactly document but around DOM
-
-Videostrates https://pure.au.dk/ws/portalfiles/portal/164699070/VideostratesUIST2019.pdf
-are docs with videos
-
-Active \cite{quint-1994-active}
-EmbeddedButtons \cite{bier-1991-docs,bier-1991-buttons}
-
-
-spreadsheets\cite{abraham-2009-spreadsheets}
-subtext \cite{edwards-2005-subtext}
-hypercard \cite{atkinson-1987-hypercard}
-jupyter \cite{kluyver-2016-jupyter}
-c.f. wrattler more live
-boxer \cite{disessa-1986-boxer}
-
-ampleforth \cite{bracha-2022-ampleforth,bracha-2024-docuapps}
-hazel \cite{omar-2021-livelits} \cite{omar-2017-hazelnut}
-bootrstraplab \cite{jakubovic-2022-bootstraplab}
-denicek \cite{petricek-2025-denicek}
-webstrates \cite{klokmose-2015-webstrates}
-
-potluck \cite{litt-2022-potluck}
-%embark \cite{sonnentag-2023-embark}
+Another variation on spreadsheets would be to use the \emph{Edit History} choice of
+document representation (see \S\ref{sec:struct-repr}). The combination would enable some of the
+affordances of Subtext and Baseline \cite{edwards-2025-baseline,edwards-2018-directprog}.
+It could be possible to construct computations by interactively manipulating concrete values
+and capturing the edit history as a formula. It could also be possible to define merging of edit
+histories and address schema change challenges arising from diverging versions of
+spreadsheets~\cite{edwards-2025-schema,burnett-2014-frieda}.
 
 \section{Related work}
-not about programming sytems \cite{crichton-2024-document}
-json editor, but similar to livelits \cite{mcnutt-2023-projectional}
-Self - not quite documents, but objects as UI
 
-antranig's thing - maybe
-Varv - maybe
+The history of document-oriented programming systems discussed in this paper has
+inevitably been selective. The papers referenced as examples are generally
+pioneering historical systems, widely-used systems, or current research projects.
 
-transclusion - used in ampleforth
+The idea of \emph{documents as user interfaces} \cite{bier-1991-docs} focused on user interaction
+rather than programming, but is closely related to document-oriented programming systems. It
+inspired research on active documents \cite{quint-1994-active} where document editor can include
+logic for collaborative editing, annotating documents or managing files on disk. The logic in those
+systems, however, is not a part of the document. EmbeddedButtons \cite{bier-1991-buttons} attaches
+the logic to buttons that can be included in documents, copied and shared.
 
-c.f. Rein's literature review - but it is more difficult to google this
+Despite our definition (see \S\ref{sec:def}), the boundary of what
+qualifies as a document-oriented programming system remains fuzzy. There are several related
+systems and formal models that we choose not to include as examples. The document calculus
+\cite{crichton-2024-document} captures systems for generating (static) documents, but it does
+not model interactive documents. We included the Hazel structure editor \cite{omar-2017-hazelnut}
+as an example of a system with widgets (livelits) \cite{omar-2021-livelits} and also because of the
+notebook vision presented as Planet Hazel~\cite{bandukwala-2024-planet}, but excluded structure
+editors \cite{teitelbaum-1981-cps} and projectional editors \cite{voelter-2014-projection}, even
+if they can be used for editing programs with projection widgets akin to
+livelits~\cite{mcnutt-2023-projectional}.
 
-\newpage
+There are also multiple programming systems that have some of the characteristics of
+document-oriented programming systems, but not all. RekonPad~\cite{ohshima-2025-renkonpad}
+is based on the DOM programming model, but uses it to build a window-based interface.
+Systems built on top of Webstrates~\cite{radle-2017-codestrates,klokmose-2019-video} are
+also relevant, but do not fundamentally change the underlying model.
+Varv~\cite{borowski-2022-varv} and Infusion~\cite{basman-2025-infusion} are closely related,
+but do not view program as a document. More historically, the UI2 or Morphic
+\cite{ungar-2007-self,maloney-1995-morphic} user interface in Self has the directness and
+liveness of many document-oriented programming systems, but does not directly use the document metaphor.
+
+Methodologically, our work builds on Technical Dimensions of Programming
+Systems~\cite{jakubovic-2023-techdims}. We ``zoom in'' to examine a more narrow space
+and uncover domain-specific design choices. The potential uses of our paper are also similar and
+include comparison of existing systems and exploration of a design space. Our aim is to
+map design space, rather than provide a comprehensive literature review and so our choice of
+example systems is selective. Using a rigorous literature review methodology, as for example
+in the review of exploratory and live programming and coding~\cite{rein-2019-exploratory}
+would be interesting, but possibly more difficult due to the lack of established terminology.
+
+\section{Conclusion}
+Document-oriented programming systems have been around in various forms and constitute an
+interesting research field, but systems in this area often exist in isolation.
+By defining the notion of a \emph{document-oriented programming system}, we aim to highlight
+an appealing programming paradigm that has been around for a long time, but remained somewhat
+out of sight.
+%
+Programming systems in this category share a number of characteristics, but also differ in
+important ways. Our catalogue of design choices maps the design
+space of document-oriented programming systems. It provides a basis for comparing existing
+systems and envisioning new research directions to explore previously under-explored combinations
+of design choices.
+
+Many of the document-oriented programming systems discussed in this paper pursue ambitious goals,
+such as making programming more transparent, more accessible to non-experts, and supporting gradual
+progression from an end-user to a developer. In fact, systems such as HyperCard achieved those goals
+in a specific context! We hope that our work contributes to better understanding and supports
+research on programming systems that share these aspirations.
 
 \bibliography{paper}
 \end{document}
